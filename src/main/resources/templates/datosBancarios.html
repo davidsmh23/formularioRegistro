@@ -8,10 +8,10 @@
 <body>
 <div class="container mt-5">
   <h2>Formulario de Cuenta Bancaria</h2>
-  <form th:action="@{/formularioBancario}" method="post" th:object="${persona}">
+  <form th:action="@{/total}" method="post" th:object="${persona}">
     <div class="mb-3">
       <label for="numeroCuenta" class="form-label">Número de Cuenta:</label>
-      <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control" required>
+      <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control">
     </div>
     <button type="submit" class="btn btn-primary">Enviar</button>
   </form>

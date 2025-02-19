@@ -11,11 +11,19 @@
     <form th:action="@{/formularioProfesional}" method="post" th:object="${persona}">
         <div class="mb-3">
             <label for="departamento" class="form-label">Departamento:</label>
-            <input type="text" id="departamento" name="departamento" class="form-control" required>
+            <select id="departamento" name="departamento" class="form-select">
+                <option value="IT">IT</option>
+                <option value="Recursos Humanos">Recursos Humanos</option>
+                <option value="Finanzas">Finanzas</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Ventas">Ventas</option>
+                <option value="Logística">Logística</option>
+            </select>
         </div>
+
         <div class="mb-3">
             <label for="salario" class="form-label">Salario:</label>
-            <input type="number" id="salario" name="salario" class="form-control" required>
+            <input type="number" id="salario" name="salario" class="form-control">
         </div>
         <div class="mb-3">
             <label for="comentario" class="form-label">Comentario:</label>

@@ -22,6 +22,10 @@
             <td th:text="${persona.apellidos}"></td>
         </tr>
         <tr>
+            <td>Fecha Nacimiento</td>
+            <td th:text="${persona.fechaNacimiento}"></td>
+        </tr>
+        <tr>
             <td>Género</td>
             <td th:text="${persona.genero}"></td>
         </tr>
@@ -30,16 +34,25 @@
             <td th:text="${persona.casado ? 'Sí' : 'No'}"></td>
         </tr>
         <tr>
-            <td>Número de hijos</td>
-            <td th:text="${persona.hijos}"></td>
+            <td>Hijos</td>
+            <td th:text="${persona.hijos ? 'Sí' : 'No'}"></td>
         </tr>
         <tr>
             <td>Nacionalidad</td>
-            <td th:text="${persona.nacionalidad}"></td>
+            <td>
+                <ul>
+                    <li th:each="pais : ${persona.nacionalidad}" th:text="${pais}"></li>
+                </ul>
+            </td>
         </tr>
+
         <tr>
             <td>Departamento</td>
-            <td th:text="${persona.departamento}"></td>
+            <td>
+                <ul>
+                    <li th:each="departamento : ${persona.departamento}" th:text="${departamento}"></li>
+                </ul>
+            </td>
         </tr>
         <tr>
             <td>Salario</td>
@@ -54,9 +67,7 @@
             <td th:text="${persona.numeroCuenta}"></td>
         </tr>
     </table>
-    <form th:action="@{/volverInicio}" method="post" th:object="${persona}">
-        <button type="submit" class="btn btn-primary">Volver al inicio</button>
-    </form>
+        <button onclick="window.location.href='/volverInicio'" class="btn btn-primary">Volver al inicio</button>
 </div>
 </body>
 </html>
