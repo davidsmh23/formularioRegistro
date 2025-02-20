@@ -1,9 +1,6 @@
 package com.example.formularioregistro.controller;
 
-import com.example.formularioregistro.model.DatosBancarios;
-import com.example.formularioregistro.model.DatosPersonales;
-import com.example.formularioregistro.model.DatosProfesionales;
-import com.example.formularioregistro.model.Persona;
+import com.example.formularioregistro.model.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,33 +26,40 @@ public class RegistroController {
     }
 
     @GetMapping("/formularioPersonal")
-    public String mostrarFormulario() {
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("listaGeneros", Colecciones.devuelveListaGeneros());
+        model.addAttribute("listaPaises", Colecciones.devuelveListaPaises());
         return "datosPersonales";
     }
 
     @PostMapping("/formularioPersonal")
     public String guardarDatosPersonales(@Validated(DatosPersonales.class) @ModelAttribute("persona") Persona persona,
-                                         BindingResult result, HttpSession session) {
+                                         BindingResult result, HttpSession session, Model model) {
+
+        model.addAttribute("listaGeneros", Colecciones.devuelveListaGeneros());
+        model.addAttribute("listaPaises", Colecciones.devuelveListaPaises());
 
         if(result.hasErrors()){
-            System.out.println("Error en los datos personales");
             return "datosPersonales";
 
         }
-        // Guardar los datos en la sesión
+        // Guardar los datos en la sesión1
         session.setAttribute("persona", persona);
 
         return "redirect:/formularioProfesional";
     }
 
     @GetMapping("/formularioProfesional")
-    public String guardarDatosProfesionales() {
+    public String guardarDatosProfesionales(Model model) {
+        model.addAttribute("listaDepartamentos", Colecciones.devuelveListaDepartamento());
         return "datosProfesionales";
     }
 
     @PostMapping("/formularioProfesional")
     public String guardarDatosProfesional(@Validated(DatosProfesionales.class) @ModelAttribute("persona") Persona persona,
-                                          BindingResult result, HttpSession session) {
+                                          BindingResult result, HttpSession session, Model model) {
+
+        model.addAttribute("listaDepartamentos", Colecciones.devuelveListaDepartamento());
 
         if(result.hasErrors()){
             return "datosProfesionales";

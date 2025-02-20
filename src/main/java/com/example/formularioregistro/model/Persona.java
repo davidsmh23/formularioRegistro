@@ -21,6 +21,7 @@ import org.springframework.web.context.annotation.SessionScope;
 public class Persona {
 
     //Grupo de validación para los datos personales
+    @NotNull(message = "El nombre no puede estar vacio", groups = DatosPersonales.class)
     private String nombre;
     private String apellidos;
     @FechaPasada(groups = DatosPersonales.class)
