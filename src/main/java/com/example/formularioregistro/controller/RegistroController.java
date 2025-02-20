@@ -1,11 +1,14 @@
 package com.example.formularioregistro.controller;
 
-import com.example.formularioregistro.Persona;
+import com.example.formularioregistro.model.DatosBancarios;
+import com.example.formularioregistro.model.DatosPersonales;
+import com.example.formularioregistro.model.DatosProfesionales;
+import com.example.formularioregistro.model.Persona;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,18 +18,29 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("persona")
 public class RegistroController {
 
+    @ModelAttribute("persona")
+    public Persona getPersona(HttpSession sesion){
+        Persona persona = (Persona) sesion.getAttribute("persona");
+        if(persona == null){
+            persona = new Persona();
+        }
+        return persona;
+
+    }
+
     @GetMapping("/formularioPersonal")
-    public String mostrarFormulario(Model model) {
-        model.addAttribute("persona", new Persona());
+    public String mostrarFormulario() {
         return "datosPersonales";
     }
 
     @PostMapping("/formularioPersonal")
-    public String guardarDatosPersonales(@Valid @ModelAttribute Persona persona,
-                                         HttpSession session, BindingResult result) {
+    public String guardarDatosPersonales(@Validated(DatosPersonales.class) @ModelAttribute("persona") Persona persona,
+                                         BindingResult result, HttpSession session) {
 
         if(result.hasErrors()){
+            System.out.println("Error en los datos personales");
             return "datosPersonales";
+
         }
         // Guardar los datos en la sesión
         session.setAttribute("persona", persona);
@@ -35,13 +49,13 @@ public class RegistroController {
     }
 
     @GetMapping("/formularioProfesional")
-    public String guardarDatosProfesionales(@ModelAttribute Persona persona) {
+    public String guardarDatosProfesionales() {
         return "datosProfesionales";
     }
 
     @PostMapping("/formularioProfesional")
-    public String guardarDatosProfesional(@Valid @ModelAttribute Persona persona,
-                                         HttpSession session, BindingResult result) {
+    public String guardarDatosProfesional(@Validated(DatosProfesionales.class) @ModelAttribute("persona") Persona persona,
+                                          BindingResult result, HttpSession session) {
 
         if(result.hasErrors()){
             return "datosProfesionales";
@@ -53,13 +67,13 @@ public class RegistroController {
     }
 
     @GetMapping("/formularioBancario")
-    public String guardarDatosBancarios(@ModelAttribute Persona persona) {
+    public String guardarDatosBancarios() {
         return "datosBancarios";
     }
 
     @PostMapping("/formularioBancario")
-    public String guardarDatosBancario(@Valid @ModelAttribute Persona persona,
-                                          HttpSession session, BindingResult result) {
+    public String guardarDatosBancario(@Validated(DatosBancarios.class) @ModelAttribute("persona") Persona persona,
+                                       BindingResult result, HttpSession session) {
 
         if(result.hasErrors()){
             return "datosBancarios";
@@ -70,7 +84,7 @@ public class RegistroController {
         return "redirect:/total";
     }
 
-    @PostMapping("/total")
+    @GetMapping("/total")
     public String total(HttpSession session, Model model){
 
         Persona persona = (Persona) session.getAttribute("persona");

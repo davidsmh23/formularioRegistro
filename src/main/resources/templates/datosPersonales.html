@@ -2,52 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Formulario de Registro</title>
+    <title>Formulario de Registro Moderno</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <div class="container mt-5">
+    <div th:replace="~{cabecera.html}"></div>
+    <br><br>
     <h2>Formulario de Registro</h2>
     <form th:action="@{/formularioPersonal}" method="post" th:object="${persona}">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" class="form-control">
+            <input type="text" id="nombre" name="nombre" class="form-control" th:field="*{nombre}">
         </div>
         <div class="mb-3">
             <label for="apellidos" class="form-label">Apellidos:</label>
-            <input type="text" id="apellidos" name="apellidos" class="form-control">
+            <input type="text" id="apellidos" name="apellidos" class="form-control" th:field="*{apellidos}">
         </div>
         <div class="mb-3">
-            <label for="apellidos" class="form-label">fechaNacimiento:</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control">
+            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" th:field="*{fechaNacimiento}">
+            <span class="error-message" th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Género:</label>
-            <label for="genero"></label><select id="genero" name="genero" class="form-select">
+            <select id="genero" name="genero" class="form-select" th:field="*{genero}">
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
                 <option value="O">Otro</option>
             </select>
         </div>
         <div class="mb-3 form-check">
-            <input type="checkbox" id="casado" name="casado" class="form-check-input">
+            <input type="checkbox" id="casado" name="casado" class="form-check-input" th:field="*{casado}">
             <label for="casado" class="form-check-label">Casado o en pareja</label>
         </div>
         <div class="mb-3 form-check">
-            <input type="checkbox" id="hijos" name="hijos" class="form-check-input">
+            <input type="checkbox" id="hijos" name="hijos" class="form-check-input" th:field="*{hijos}">
             <label for="hijos" class="form-check-label">Hijos</label>
         </div>
         <div class="mb-3">
             <label for="nacionalidad" class="form-label">Nacionalidad:</label>
-            <select id="nacionalidad" name="nacionalidad" class="form-select" multiple>
+            <select th:field="*{nacionalidad}" id="nacionalidad" name="nacionalidad" class="form-select" multiple>
                 <option value="España">España</option>
                 <option value="México">México</option>
                 <option value="Argentina">Argentina</option>
                 <option value="Colombia">Colombia</option>
             </select>
+            <span class="error-message" th:if="${#fields.hasErrors('nacionalidad')}" th:text="${#fields.errors('nacionalidad')}"></span>
         </div>
-
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary w-100">Enviar</button>
     </form>
 </div>
 </body>
