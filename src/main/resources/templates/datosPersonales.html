@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" th:field="*{fechaNacimiento}">
+            <input type="text" id="fechaNacimiento" name="fechaNacimiento" class="form-control" th:field="*{fechaNacimiento}" placeholder="dd/MM/yyyy">
             <span class="error-message" th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></span>
         </div>
         <div class="mb-3">

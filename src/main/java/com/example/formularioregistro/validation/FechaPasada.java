@@ -7,10 +7,10 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = FechaPasadaValidator.class)
-@Target(ElementType.FIELD) // Aplica a campos individuales
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FechaPasada {
-    String message() default "La fecha debe ser anterior a hoy"; // Mensaje de error
+    String message() default "La fecha debe ser anterior a hoy";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

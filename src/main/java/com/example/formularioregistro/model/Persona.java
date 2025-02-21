@@ -21,11 +21,14 @@ import org.springframework.web.context.annotation.SessionScope;
 public class Persona {
 
     //Grupo de validación para los datos personales
+    //@NotBlank(message = "El nombre no puede estar vacio", groups = DatosPersonales.class)
     @NotNull(message = "El nombre no puede estar vacio", groups = DatosPersonales.class)
-    private String nombre;
+    private String nombre = " ";
     private String apellidos;
     @FechaPasada(groups = DatosPersonales.class)
-    private LocalDate fechaNacimiento;
+    @Pattern(regexp = "^(0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/\\d{4}$",
+            message = "Formato inválido. Use dd/MM/yyyy", groups = DatosPersonales.class)
+    private String fechaNacimiento;
     private String genero;
     private boolean casado;
     private boolean hijos;
@@ -36,15 +39,15 @@ public class Persona {
     //Grupo de validación para los datos profesionales
     private ArrayList<String> departamento;
     @NotNull(message = "El salario no puede estar vacío", groups = DatosProfesionales.class)
-    @Digits(integer = 10, fraction = 2, message = "El salario debe ser un número válido con hasta 10 dígitos enteros y 2 decimales",
+    @Pattern(regexp = "^\\d+(\\.\\d{1,2})?$", message = "El salario debe ser un número válido con hasta dos decimales",
             groups = DatosProfesionales.class)
-    private double salario;
+    private String salario;
     private String comentario;
 
     //Grupo de validación para los datos bancarios
     @NotNull(message = "El número de cuenta no puede estar vacío", groups = DatosBancarios.class)
-    @Digits(integer = 20, fraction = 0, message = "El número de cuenta debe tener exactamente 20 dígitos",
+    @Pattern(regexp = "\\d{20}", message = "El número de cuenta debe tener exactamente 20 dígitos",
             groups = DatosBancarios.class)
-    private int numeroCuenta;
+    private String numeroCuenta;
 }
 
